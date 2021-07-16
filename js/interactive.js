@@ -83,7 +83,7 @@ var APP = {
     for (let i = 0; i < Workflow.freqs.length; i++) {
       let lo = Workflow.status[Workflow.freqs[i]].lodb;
       let hi = Workflow.status[Workflow.freqs[i]].hidb;
-      if(hi - lo >= LeastResolutionRange) newdata.push([hi, lo, hi, lo]);
+      if (hi - lo >= LeastResolutionRange) newdata.push([hi, lo, hi, lo]);
       else newdata.push([lo, hi, lo, hi]);
     }
     let option = {
@@ -196,7 +196,7 @@ var APP = {
     let eqpass = [], eqmax = -15;
     for (let i = 0; i < DefinedFreqs.length; i++) {
       eqpass.push(tlist[i] - slist[i]);
-      if(DefinedFreqs[i] > 80) {
+      if (DefinedFreqs[i] > 80) {
         eqmax = Math.max(eqmax, eqpass[i]);
       }
     }
@@ -223,6 +223,8 @@ var APP = {
   end: function () {
     $('#M').addClass('hide');
     $('#RM').removeClass('hide');
+    document.onkeydown = function () {
+    };
   }
 }
 
@@ -232,6 +234,26 @@ function Init() {
   AUD.startSound(test.freq, test.db);
   APP.init();
   APP.progressUpdate();
+
+  document.onkeydown = function (event) {
+    var e = event || window.event || arguments.callee.caller.arguments[0];
+    if (e && e.keyCode == 37) { // <-
+      AUD.stopSound();
+      Workflow.saveTest(true);
+      let test = Workflow.getTest();
+      if (test == null) APP.end();
+      AUD.startSound(test.freq, test.db);
+      APP.progressUpdate();
+    }
+    if (e && e.keyCode == 39) {// ->
+      AUD.stopSound();
+      Workflow.saveTest(false);
+      let test = Workflow.getTest();
+      if (test == null) APP.end();
+      AUD.startSound(test.freq, test.db);
+      APP.progressUpdate();
+    }
+  };
 }
 
 $('#Canhear').click(function () {
