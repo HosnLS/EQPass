@@ -1,6 +1,6 @@
 const LeastInterval = 3;
 const LeastResolutionRange = 0.5
-const FadeTime = 1;
+const FadeTime = 0.5;
 
 var DefinedFreqs = [];
 

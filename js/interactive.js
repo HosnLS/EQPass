@@ -19,7 +19,7 @@ $('#ISMFreqsIsoSetting').children().click(function () {
 
 $('#IMTest').click(function () {
   AUD.init();
-  AUD.startSound(80, -20);
+  AUD.startSound(80, -15);
   $(this).addClass('hide');
   $('#IMStart').removeClass('hide');
 })
@@ -83,7 +83,8 @@ var APP = {
     for (let i = 0; i < Workflow.freqs.length; i++) {
       let lo = Workflow.status[Workflow.freqs[i]].lodb;
       let hi = Workflow.status[Workflow.freqs[i]].hidb;
-      newdata.push([hi, lo, hi, lo]);
+      if(hi - lo >= LeastResolutionRange) newdata.push([hi, lo, hi, lo]);
+      else newdata.push([lo, hi, lo, hi]);
     }
     let option = {
       xAxis: {
@@ -116,12 +117,12 @@ var APP = {
       tlist.push(tdic[tx[i]]);
     }
 
-    let slist = [], mean = 0;
+    let slist = [], mean = 0, meancount = 0;
     for (let i = 0; i < DefinedFreqs.length; i++) {
       let lo = Workflow.status[DefinedFreqs[i]].lodb;
       let hi = Workflow.status[DefinedFreqs[i]].hidb;
-      slist.push((lo + hi) / 2);
-      mean += (lo + hi) / 2 - tdic[DefinedFreqs[i]];
+      slist.push(-(lo + hi) / 2);
+      mean += -(lo + hi) / 2 - tdic[DefinedFreqs[i]];
     }
     mean /= slist.length;
     for (let i = 0; i < DefinedFreqs.length; i++) {
@@ -195,7 +196,9 @@ var APP = {
     let eqpass = [], eqmax = -15;
     for (let i = 0; i < DefinedFreqs.length; i++) {
       eqpass.push(tlist[i] - slist[i]);
-      eqmax = Math.max(eqmax, eqpass[i]);
+      if(DefinedFreqs[i] > 80) {
+        eqmax = Math.max(eqmax, eqpass[i]);
+      }
     }
     if (eqmax > 15) {
       for (let i = 0; i < DefinedFreqs.length; i++) {
