@@ -111,7 +111,7 @@ var APP = {
     else tdic = HTCIE17;
 
     let tx = [], tlist = [];
-    for (let i = 20; i <= 20000; i = Math.ceil(Math.pow(i, 1.001))) tx.push(i);
+    for (let i = 16; i <= 20000; i = Math.ceil(Math.pow(i, 1.001))) tx.push(i);
     tx.push(20000);
     for (let i = 0; i < tx.length; i++) {
       tlist.push(tdic[tx[i]]);
