@@ -241,7 +241,10 @@ function Init() {
       AUD.stopSound();
       Workflow.saveTest(true);
       let test = Workflow.getTest();
-      if (test == null) APP.end();
+      if (test == null) {
+        APP.end();
+        return;
+      }
       AUD.startSound(test.freq, test.db);
       APP.progressUpdate();
     }
@@ -249,7 +252,10 @@ function Init() {
       AUD.stopSound();
       Workflow.saveTest(false);
       let test = Workflow.getTest();
-      if (test == null) APP.end();
+      if (test == null) {
+        APP.end();
+        return;
+      }
       AUD.startSound(test.freq, test.db);
       APP.progressUpdate();
     }
@@ -260,7 +266,10 @@ $('#Canhear').click(function () {
   AUD.stopSound();
   Workflow.saveTest(true);
   let test = Workflow.getTest();
-  if (test == null) APP.end();
+  if (test == null) {
+    APP.end();
+    return;
+  }
   AUD.startSound(test.freq, test.db);
   APP.progressUpdate();
 })
@@ -269,7 +278,10 @@ $('#Cannothear').click(function () {
   AUD.stopSound();
   Workflow.saveTest(false);
   let test = Workflow.getTest();
-  if (test == null) APP.end();
+  if (test == null) {
+    APP.end();
+    return;
+  }
   AUD.startSound(test.freq, test.db);
   APP.progressUpdate();
 })
