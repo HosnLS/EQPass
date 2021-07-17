@@ -196,7 +196,7 @@ var APP = {
     let eqpass = [], eqmax = -15;
     for (let i = 0; i < DefinedFreqs.length; i++) {
       eqpass.push(tlist[i] - slist[i]);
-      if (DefinedFreqs[i] > 80) {
+      if (DefinedFreqs[i] > 80 && DefinedFreqs[i] <= 16000) {
         eqmax = Math.max(eqmax, eqpass[i]);
       }
     }
