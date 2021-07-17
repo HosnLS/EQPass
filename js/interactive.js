@@ -54,10 +54,10 @@ $('#ISMStart').click(function () {
       return;
     }
     for (let i = 0; i < strs.length; i++) {
-      strs[i] = Number(strs[i]);
+      strs[i] = Math.round(Number(strs[i]));
     }
     for (let i = 0; i < strs.length; i++) {
-      if (typeof (strs[i]) !== 'number' || isNaN(strs[i]) || strs[i] < 20 || strs[i] > 20000) {
+      if (typeof (strs[i]) !== 'number' || isNaN(strs[i]) || strs[i] < 16 || strs[i] > 20000) {
         alert('自定义的频段不合法!');
         return;
       }
