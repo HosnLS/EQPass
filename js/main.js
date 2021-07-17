@@ -14,7 +14,7 @@ var Workflow = {
     for (let i = 0; i < freqs.length; i++) {
       freq = freqs[i]
       this._pipe.push(freq);
-      this.status[freq] = {lodb: -80, hidb: 0, stage: stage};
+      this.status[freq] = {lodb: -40, hidb: 0, stage: stage};
     }
   },
   getTest: function () {
@@ -53,7 +53,7 @@ var AUD = {
     }
   },
   startSound: function (freq, hz) {
-    hz = Math.pow(10, hz / 20);
+    hz = Math.pow(100, hz / 20);
     this.Osc = this.Ctx.createOscillator();
     this.Osc.frequency.value = freq;
     this.Osc.type = 'sine'

@@ -200,9 +200,9 @@ var APP = {
         eqmax = Math.max(eqmax, eqpass[i]);
       }
     }
-    if (eqmax > 15) {
+    if (eqmax > 12) {
       for (let i = 0; i < DefinedFreqs.length; i++) {
-        eqpass[i] -= eqmax - 15;
+        eqpass[i] -= eqmax - 12;
       }
     }
     let str = '';
@@ -217,7 +217,7 @@ var APP = {
     }
     str += '</tr></tbody>';
     str += '</table>';
-    str += '<div>Gain : ' + Math.min(15, eqmax).toFixed(1) + ' dB</div>'
+    str += '<div>Gain : ' + Math.max(-15, -eqmax).toFixed(1) + ' dB</div>'
     $('#RMEqTable').html(str);
   },
   end: function () {
