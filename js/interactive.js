@@ -1,3 +1,6 @@
+const VALID_FREQUENCY_MAX = 12500;
+const VALID_FREQUENCY_MIN = 80;
+
 $('#ISMFreqsIsoButtom').click(function () {
   $('#ISMFreqs').children().removeClass('active');
   $(this).addClass('active');
@@ -62,7 +65,9 @@ $('#ISMStart').click(function () {
         return;
       }
     }
-    DefinedFreqs = strs.sort();
+    DefinedFreqs = strs.sort((a, b) => {
+      return a - b;
+    });
   }
   $('#IM').addClass('hide');
   $('#ISM').modal('hide');
@@ -105,26 +110,38 @@ var APP = {
   },
   resultUpdate: function (name) {
     let tdic;
-    if (name === 'OE 2013') tdic = HTCOE13;
-    else if (name === 'OE 2015') tdic = HTCOE15;
-    else if (name === 'OE 2017') tdic = HTCOE17;
-    else tdic = HTCIE17;
+    if (name === '小白开水') tdic = TC0;
+    else if (name === '大白开水') tdic = TC20;
+    else if (name === 'Harman 0') tdic = HTC0;
+    else tdic = HTC20;
 
-    let tx = [], tlist = [];
+    let tx = [], tlist = [], slist = [], mean = 0, meancount = 0;;
     for (let i = 16; i <= 20000; i = Math.ceil(Math.pow(i, 1.001))) tx.push(i);
     tx.push(20000);
     for (let i = 0; i < tx.length; i++) {
       tlist.push(tdic[tx[i]]);
     }
+    /*
 
-    let slist = [], mean = 0, meancount = 0;
+        // debug
+        slist = [0, 0, 0, 0, 18, 18.4, 25.2, 32.8, 34.4, 42.6, 45.2, 46.1, 43.9, 35.8, 38.4, 40.9, 42.6, 45.9, 44.6, 39.8, 41.1, 41, 46.1, 50.7, 42.8, 38.9,
+                 37.4, 40.9, 37.5, 23, 2.5];
+        for(let i = 0; i < slist.length; i++)slist[i] = slist[i];
+        DefinedFreqs = [16, 20, 26, 32, 41, 52, 66, 84, 105, 135, 170, 220, 280, 350, 440, 560, 720, 910, 1200, 1500, 1900, 2300, 3000, 3800, 4800, 6100, 7700, 10000, 12500, 16000, 20000];
+        //debug
+    */
     for (let i = 0; i < DefinedFreqs.length; i++) {
       let lo = Workflow.status[DefinedFreqs[i]].lodb;
       let hi = Workflow.status[DefinedFreqs[i]].hidb;
       slist.push(-(lo + hi) / 2);
-      mean += -(lo + hi) / 2 - tdic[DefinedFreqs[i]];
     }
-    mean /= slist.length;
+    for (let i = 0; i < DefinedFreqs.length; i++) {
+      if (DefinedFreqs[i] >= VALID_FREQUENCY_MIN && DefinedFreqs[i] <= VALID_FREQUENCY_MAX) {
+        mean += slist[i] - tdic[DefinedFreqs[i]];
+        meancount++;
+      }
+    }
+    mean /= Math.max(0, meancount);
     for (let i = 0; i < DefinedFreqs.length; i++) {
       slist[i] -= mean;
     }
@@ -138,7 +155,7 @@ var APP = {
         }
       },
       legend: {
-        data: ['您的听觉曲线', '哈曼目标频响曲线']
+        data: ['您的听觉曲线', '目标曲线']
       },
       xAxis: [
         {
@@ -147,7 +164,7 @@ var APP = {
           axisPointer: {
             label: {
               formatter: function (params) {
-                return '哈曼曲线 ' + params.value + (params.seriesData.length ? 'Hz ：' + params.seriesData[0].data.toFixed(1) : '');
+                return '目标曲线 ' + params.value + (params.seriesData.length ? 'Hz ：' + params.seriesData[0].data.toFixed(1) : '');
               }
             }
           },
@@ -171,7 +188,7 @@ var APP = {
       ],
       series: [
         {
-          name: '哈曼目标频响曲线',
+          name: '目标曲线',
           type: 'line',
           xAxisIndex: 0,
           smooth: true,
@@ -193,16 +210,16 @@ var APP = {
     this.resultChart.resize();
     this.resultChart.setOption(option);
 
-    let eqpass = [], eqmax = -15;
+    let eqpass = [], eqmax = 0;
     for (let i = 0; i < DefinedFreqs.length; i++) {
-      eqpass.push(tlist[i] - slist[i]);
-      if (DefinedFreqs[i] > 80 && DefinedFreqs[i] <= 13500) {
+      eqpass.push(tdic[DefinedFreqs[i]] - slist[i]);
+      if (DefinedFreqs[i] >= VALID_FREQUENCY_MIN && DefinedFreqs[i] <= VALID_FREQUENCY_MAX) {
         eqmax = Math.max(eqmax, eqpass[i]);
       }
     }
-    if (eqmax > 12) {
+    if (eqmax > 15) {
       for (let i = 0; i < DefinedFreqs.length; i++) {
-        eqpass[i] -= eqmax - 12;
+        eqpass[i] -= eqmax - 15;
       }
     }
     let str = '';
@@ -221,6 +238,7 @@ var APP = {
     $('#RMEqTable').html(str);
   },
   end: function () {
+    AUD.stopSound();
     $('#M').addClass('hide');
     $('#RM').removeClass('hide');
     document.onkeydown = function () {

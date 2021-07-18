@@ -20,7 +20,7 @@
   <div class="jumbotron">
     <h1>EQ-Pass</h1>
     <h2>个性化EQ调节一站式解决方案</h2>
-    <p>由于每个人对不同频率声音的敏感程度不同，同时不同耳机的频响曲线也有所差异，本站点旨在通过标准化测试，得出针对您听感的耳机频响曲线报告，并根据哈曼频响目标曲线自动计算出最合适的EQ调解方案</p>
+    <p>由于每个人对不同频率声音的敏感程度不同，同时不同耳机的频响曲线也有所差异，本站点旨在通过标准化测试，得出针对您听感的耳机频响曲线报告，并根据等响度目标曲线及哈曼曲线自动计算出最合适的EQ调解方案</p>
     <div class="text-center">
       <button class="btn btn-lg btn-warning" id="IMTest">开始进行音量调节</button>
       <button class="btn btn-lg btn-success hide" id="IMStart">让我们开始吧</button>
@@ -80,12 +80,12 @@
 
 <div class="container theme-showcase text-center hide" id="RM">
   <h1>您的测试结果如下</h1>
-  <h4>哈曼频响目标曲线有不同标准，请选择您要查看的标准</h4>
+  <h4>频响目标曲线有不同标准，请选择您要查看的标准</h4>
   <ul class="nav nav-pills" style="display:table;text-align:center;margin:0 auto;" id="RMStandardSetting">
-    <li role="presentation"><a href="#">OE 2013</a></li>
-    <li role="presentation"><a href="#">OE 2015</a></li>
-    <li role="presentation"><a href="#">OE 2017</a></li>
-    <li role="presentation"><a href="#">IE 2017</a></li>
+    <li role="presentation"><a href="#">小白开水</a></li>
+    <li role="presentation"><a href="#">大白开水</a></li>
+    <li role="presentation"><a href="#">Harman 0</a></li>
+    <li role="presentation"><a href="#">Harman 20</a></li>
   </ul>
   <div id="RMCurveChart"></div>
   <div id="RMEqTable"></div>
