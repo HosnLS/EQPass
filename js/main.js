@@ -52,14 +52,14 @@ var AUD = {
       alert('Web Audio API is not supported in this browser');
     }
   },
-  startSound: function (freq, hz) {
-    hz = Math.pow(10, hz / 20);
+  startSound: function (freq, spl) {
+    spl = Math.pow(10, spl / 10);
     this.Osc = this.Ctx.createOscillator();
     this.Osc.frequency.value = freq;
     this.Osc.type = 'sine'
     this.Gain = this.Ctx.createGain();
     this.Gain.gain.setValueAtTime(0, this.Ctx.currentTime);
-    this.Gain.gain.linearRampToValueAtTime(hz, this.Ctx.currentTime + FadeTime);
+    this.Gain.gain.linearRampToValueAtTime(spl, this.Ctx.currentTime + FadeTime);
     this.Osc.connect(this.Gain);
     this.Gain.connect(this.Ctx.destination);
     this.Osc.start(0);
