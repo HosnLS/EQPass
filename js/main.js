@@ -8,6 +8,7 @@ var Workflow = {
   freqs: [],
   status: {},
   _pipe: [],
+  _undoList: [],
   _last: null,
   init: function (freqs, stage = 0) {
     this.freqs = freqs
@@ -36,8 +37,34 @@ var Workflow = {
     let hi = this.status[this.last].hidb;
     if (can) this.status[this.last].hidb = (2 * hi + lo) / 3;
     else this.status[this.last].lodb = (2 * lo + hi) / 3;
+
+    this._undoList.push({
+      freq: this.last,
+      'hi': hi,
+      'lo': lo
+    });
+
     if (this.status[this.last].hidb - this.status[this.last].lodb >= LeastResolutionRange)
       this._pipe.push(this.last);
+  },
+  unDoAndGetTest: function () {
+    if (this._undoList.length <= 0) return null;
+
+    this._pipe.push(this.last);
+
+    let lastTest = this._undoList.pop();
+    this.last = lastTest.freq;
+    this._pipe.forEach(function(item, index, arr) {
+    if(item === lastTest.freq) {
+        arr.splice(index, 1);
+    }})
+    this.status[lastTest.freq].hidb = lastTest.hi;
+    this.status[lastTest.freq].lodb = lastTest.lo;
+    var middb = (lastTest.hi + lastTest.lo) / 2;
+    return {
+      freq: this.last,
+      db: middb
+    };
   }
 }
 
