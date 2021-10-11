@@ -53,7 +53,7 @@ var AUD = {
     }
   },
   startSound: function (freq, spl) {
-    spl = Math.pow(10, spl / 10);
+    spl = Math.pow(10, spl / 20);
     this.Osc = this.Ctx.createOscillator();
     this.Osc.frequency.value = freq;
     this.Osc.type = 'sine'
