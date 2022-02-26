@@ -16,95 +16,111 @@
 </head>
 
 <body>
-<div class="container theme-showcase" id="IM">
-  <div class="jumbotron">
-    <h1>EQ-Pass</h1>
-    <h2>个性化EQ调节一站式解决方案</h2>
-    <p>由于每个人对不同频率声音的敏感程度不同，同时不同耳机的频响曲线也有所差异，本站点旨在通过标准化测试，得出针对您听感的耳机频响曲线报告，并根据等响度目标曲线及哈曼曲线自动计算出最合适的EQ调解方案</p>
-    <div class="text-center">
-      <button class="btn btn-lg btn-warning" id="IMTest">开始进行音量调节</button>
-      <button class="btn btn-lg btn-success hide" id="IMStart">让我们开始吧</button>
-      <p>接下来将播放80Hz的正弦波，请调节音量，至到刚好能听见此声音</p>
+  <div class="container theme-showcase" id="IM">
+    <div class="jumbotron">
+      <h1>EQ-Pass</h1>
+      <h2>个性化EQ调节一站式解决方案</h2>
+      <p>由于每个人对不同频率声音的敏感程度不同，同时不同耳机的频响曲线也有所差异，本站点旨在通过标准化测试，得出针对您听感的耳机频响曲线报告，并根据等响度目标曲线及哈曼曲线自动计算出最合适的EQ调解方案</p>
+      <div class="text-center">
+        <button class="btn btn-lg btn-warning" id="IMTest">开始进行音量调节</button>
+        <button class="btn btn-lg btn-success hide" id="IMStart">让我们开始吧</button>
+        <br><br>
+        <p>接下来将播放80Hz的正弦波，请调节音量，至到刚好能听见此声音</p>
+        <br><br><br>
+      </div>
+      <div>
+        <small>参考文献：</small><br>
+        <small>[1] S.E. Olive, T. Welti and E. McMullin, "Listener Preferences for In-Room Loudspeaker and Headphone
+          Target Responses", 2013.</small><br>
+        <small>[2] S.E. Olive, T. Welti and E. McMullin, "Listener Preference for Different Headphone Target Response
+          Curves", 2013.</small><br>
+        <small>[3] S.E. Olive, T. Welti and O. Khonsaripour, "Perception & Measurement of Headphone Sound Quality: Is
+          There A Preferred Target Response", 2017.</small><br>
+        <small>[4] ISO/TC 43 Acoustics, "ISO 226:2003 Acoustics - Normal equal-loudness-level contours",
+          2003.</small><br>
+        <small>[5] ISO/TC 43 Acoustics, "ISO 389-7:2019 Acoustics - Reference zero for the calibration of audiometric
+          equipment - Part 7: Reference threshold of hearing under free-field and diffuse-field listening conditions",
+          2019.</small><br>
+      </div>
+      <div class="text-center">
+      </div>
     </div>
-    <div class="text-center">
-    </div>
+
   </div>
 
-</div>
+  <div class="modal fade" id='ISM' role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="list-group" id="ISMFreqs">
+            <a href="#" id="ISMFreqsIsoButtom" class="list-group-item">
+              <h4 class="list-group-item-heading">ISO标准EQ频段</h4>
+              <p class="list-group-item-text">采用国际标准化组织（ISO）所建议的ISO频段</p>
+            </a>
+            <div class="list-group hide" id="ISMFreqsIsoSetting">
+              <a href="#" class="list-group-item" id="ISMFreqsIsoSetting10">ISO 10段式EQ频段</a>
+              <a href="#" class="list-group-item" id="ISMFreqsIsoSetting15">ISO 15段式EQ频段</a>
+              <a href="#" class="list-group-item" id="ISMFreqsIsoSetting31">ISO 31段式EQ频段</a>
+            </div>
 
-<div class="modal fade" id='ISM' role="dialog">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
-      </div>
-      <div class="modal-body">
-        <div class="list-group" id="ISMFreqs">
-          <a href="#" id="ISMFreqsIsoButtom" class="list-group-item">
-            <h4 class="list-group-item-heading">ISO标准EQ频段</h4>
-            <p class="list-group-item-text">采用国际标准化组织（ISO）所建议的ISO频段</p>
-          </a>
-          <div class="list-group hide" id="ISMFreqsIsoSetting">
-            <a href="#" class="list-group-item" id="ISMFreqsIsoSetting10">ISO 10段式EQ频段</a>
-            <a href="#" class="list-group-item" id="ISMFreqsIsoSetting15">ISO 15段式EQ频段</a>
-            <a href="#" class="list-group-item" id="ISMFreqsIsoSetting31">ISO 31段式EQ频段</a>
+            <a href="#" class="list-group-item" id="ISMFreqsCostomButtom">
+              <h4 class="list-group-item-heading">自定义EQ频段</h4>
+              <p class="list-group-item-text">采用自定义的ISO频段</p>
+            </a>
+            <input type="text" class="form-control hide" id="ISMFreqsCustomSetting"
+              placeholder="请输入整数频段，用空格分隔，且频段应处于[16, 20000]之内">
           </div>
-
-          <a href="#" class="list-group-item" id="ISMFreqsCostomButtom">
-            <h4 class="list-group-item-heading">自定义EQ频段</h4>
-            <p class="list-group-item-text">采用自定义的ISO频段</p>
-          </a>
-          <input type="text" class="form-control hide" id="ISMFreqsCustomSetting"
-                 placeholder="请输入整数频段，用空格分隔，且频段应处于[16, 20000]之内">
+        </div>
+        <div class="modal-footer">
+          <button type="button" id="ISMStart" class="btn btn-primary"><span class="glyphicon glyphicon-ok"
+              aria-hidden="true"></span> 开始！
+          </button>
         </div>
       </div>
-      <div class="modal-footer">
-        <button type="button" id="ISMStart" class="btn btn-primary"><span
-          class="glyphicon glyphicon-ok" aria-hidden="true"></span> 开始！
-        </button>
-      </div>
     </div>
   </div>
-</div>
 
-<div class="container theme-showcase hide" id="M">
-  <!-- Add your site or application content here -->
-  <div id="MProgressChart"></div>
-  <h1 class="text-center">您能听到吗？</h1>
-  <div class="text-center">可以使用 方向键左、方向键右、Z 代替点击</div>
-  <div class='text-center'>
-    <button class="btn btn-lg btn-success" id="Canhear">Can</button>
-    <button class="btn btn-lg btn-danger" id="Cannothear">Cannot</button>
-    <button class="btn btn-lg btn-warning" id="Undo">Undo</button>
+  <div class="container theme-showcase hide" id="M">
+    <!-- Add your site or application content here -->
+    <div id="MProgressChart"></div>
+    <h1 class="text-center">您能听到吗？</h1>
+    <div class="text-center">可以使用 方向键左、方向键右、Z 代替点击</div>
+    <div class='text-center'>
+      <button class="btn btn-lg btn-success" id="Canhear">Can</button>
+      <button class="btn btn-lg btn-danger" id="Cannothear">Cannot</button>
+      <button class="btn btn-lg btn-warning" id="Undo">Undo</button>
+    </div>
   </div>
-</div>
 
-<div class="container theme-showcase text-center hide" id="RM">
-  <h1>您的测试结果如下</h1>
-  <h4>频响目标曲线有不同标准，请选择您要查看的标准</h4>
-  <ul class="nav nav-pills" style="display:table;text-align:center;margin:0 auto;" id="RMStandardSetting">
-    <li role="presentation"><a href="#">Diffuse Field</a></li>
-    <li role="presentation"><a href="#">Free Field</a></li>
-    <li role="presentation"><a href="#">Diffuse Field+Gain</a></li>
-    <li role="presentation"><a href="#">Free Field+Gain</a></li>
-    <li role="presentation"><a href="#">Harman OE2013</a></li>
-    <li role="presentation"><a href="#">Harman OE2015</a></li>
-    <li role="presentation"><a href="#">Harman OE2017</a></li>
-    <li role="presentation"><a href="#">Harman IE2017</a></li>
-  </ul>
-  <div id="RMCurveChart"></div>
-  <div id="RMEqTable"></div>
-</div>
+  <div class="container theme-showcase text-center hide" id="RM">
+    <h1>您的测试结果如下</h1>
+    <h4>频响目标曲线有不同标准，请选择您要查看的标准</h4>
+    <ul class="nav nav-pills" style="display:table;text-align:center;margin:0 auto;" id="RMStandardSetting">
+      <li role="presentation"><a href="#">Diffuse Field</a></li>
+      <li role="presentation"><a href="#">Free Field</a></li>
+      <li role="presentation"><a href="#">Diffuse Field+Gain</a></li>
+      <li role="presentation"><a href="#">Free Field+Gain</a></li>
+      <li role="presentation"><a href="#">Harman OE2013</a></li>
+      <li role="presentation"><a href="#">Harman OE2015</a></li>
+      <li role="presentation"><a href="#">Harman OE2017</a></li>
+      <li role="presentation"><a href="#">Harman IE2017</a></li>
+    </ul>
+    <div id="RMCurveChart"></div>
+    <div id="RMEqTable"></div>
+  </div>
 
 
-<script src="js/vendor/modernizr-3.11.2.min.js"></script>
-<script src="js/vendor/jquery-3.6.0.min.js"></script>
-<script src="js/vendor/bootstrap.min.js"></script>
-<script src="js/vendor/echarts.min.js"></script>
-<script src="js/plugins.js"></script>
-<script src="js/main.js"></script>
-<script src="js/interactive.js"></script>
-<script src="js/HTC.js"></script>
+  <script src="js/vendor/modernizr-3.11.2.min.js"></script>
+  <script src="js/vendor/jquery-3.6.0.min.js"></script>
+  <script src="js/vendor/bootstrap.min.js"></script>
+  <script src="js/vendor/echarts.min.js"></script>
+  <script src="js/plugins.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/interactive.js"></script>
+  <script src="js/HTC.js"></script>
 </body>
 
 </html>
